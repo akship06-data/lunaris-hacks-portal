@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: lunaris
+      POSTGRES_PASSWORD: lunaris_dev_password
+      POSTGRES_DB: lunaris_hacks
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql://lunaris:lunaris_dev_password@db:5432/lunaris_hacks
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
